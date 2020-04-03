@@ -17,16 +17,16 @@ export default class GameScene extends Phaser.Scene {
 
     createMap () {
         // create the tilemap
-        this.map = this.make.tilemap({ key: 'pokemaze_scene1' });
+        this.map = this.make.tilemap({ key: 'map1' });
      
         // add tileset image
-        this.tiles = this.map.addTilesetImage('pokemon_tileset');
+        this.tiles = this.map.addTilesetImage('GimpMaster');
     
         // create our layers
         this.backgroundLayer = this.map.createStaticLayer('Background', this.tiles, 0, 0);
         this.blockedLayer = this.map.createStaticLayer('Blocked', this.tiles, 0, 0);
         this.blockedLayer = this.map.createStaticLayer('Blocked2', this.tiles, 0, 0);
-        this.blockedLayer = this.map.createStaticLayer('Blocked3', this.tiles, 0, 0);
+        // this.blockedLayer = this.map.createStaticLayer('Blocked3', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Paths', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Paths2', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture', this.tiles, 0, 0);
