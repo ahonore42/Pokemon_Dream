@@ -10,10 +10,24 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create () {
+        //listen for the resize event
+        this.scale.on('resize', this.resize, this);
         //creates the tilemap
         this.createMap();
         
     }
+
+    resize (gameSize, baseSize, displaySize, resolution) {  //enables dynamic resizing of the game window with browsers
+        let width = gameSize.width;
+        let height = gameSize.height;
+          if (width === undefined) {
+            width = this.sys.game.config.width;
+          }
+          if (height === undefined) {
+            height = this.sys.game.config.height;
+          }
+          this.cameras.resize(width, height);
+        }
 
     createMap () {
         // create the tilemap

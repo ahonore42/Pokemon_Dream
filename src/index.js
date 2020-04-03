@@ -13,3 +13,7 @@ class Game extends Phaser.Game {
 }
 
 window.game = new Game();
+window.addEventListener('resize', (event) => {
+  console.log(window.innerWidth);
+  game.scale.resize(window.innerWidth, window.innerHeight)
+});
