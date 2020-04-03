@@ -1,5 +1,5 @@
 import 'phaser';
-
+import Player from '../Sprites/Player';
 
 export default class GameScene extends Phaser.Scene {
     constructor (key) {
@@ -12,8 +12,33 @@ export default class GameScene extends Phaser.Scene {
     create () {
         //listen for the resize event
         this.scale.on('resize', this.resize, this);
+        // listen for player input
+        this.cursors = this.input.keyboard.createCursorKeys();
         //creates the tilemap
         this.createMap();
+        // create pokemon
+        this.createPlayer();      
+        //add collisions
+        this.addCollisions();
+        //  update the camera to follow the player around the map
+        this.cameras.main.startFollow(this.player);  
+    }
+
+    update () {
+        this.player.update(this.cursors);
+    }
+
+    addCollisions () {      //adds collisions between the player and the map
+        this.physics.add.collider(this.player, this.blockedLayer)
+    }
+
+    createPlayer () {
+        this.map.findObject('Player', (obj) => {
+            console.log(obj);
+            if (obj.type === 'StartingPosition') {
+            this.player = new Player(this, obj.x, obj.y);
+            }
+        });
         
     }
 
@@ -45,6 +70,7 @@ export default class GameScene extends Phaser.Scene {
         this.backgroundLayer = this.map.createStaticLayer('Paths2', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture2', this.tiles, 0, 0);
+        this.blockedLayer.setCollisionByExclusion(-1);
     }
 };
 

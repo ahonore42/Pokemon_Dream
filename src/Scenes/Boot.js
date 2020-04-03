@@ -11,8 +11,10 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
         // loads in the tilemap
         this.load.tilemapTiledJSON('map1', '../src/assets/tilemaps/map1.json');
  
-        // load in the spritesheet
+        // load in the map spritesheet
         this.load.spritesheet('GimpMaster', '../src/assets/images/GimpMaster.png', { frameWidth: 32, frameHeight: 32 });
+        // load in the character spritesheet
+        this.load.spritesheet('Bulbasaur', '../src/assets/images/Bulbasaur.png', { frameWidth: 32, frameHeight: 32 });
     }
 
     create () {
