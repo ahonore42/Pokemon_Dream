@@ -1,5 +1,6 @@
 import 'phaser';
 import Player from '../Sprites/Player';
+import Portal from '../Sprites/Portal';
 
 export default class GameScene extends Phaser.Scene {
     constructor (key) {
@@ -17,7 +18,9 @@ export default class GameScene extends Phaser.Scene {
         //creates the tilemap
         this.createMap();
         // create pokemon
-        this.createPlayer();    
+        this.createPlayer();   
+        
+        this.createPortal();
         // create a portal
         //this.createPortal()  
         //add collisions
@@ -31,9 +34,9 @@ export default class GameScene extends Phaser.Scene {
     }
 
     addCollisions () {      //adds collisions between the player and the map
+        
         this.physics.add.collider(this.player, this.blockedLayer)
         this.physics.add.collider(this.player, this.map)
-        this.physics.add.collider(this.player, this.blockedLayer);
 
     }
 
@@ -46,6 +49,13 @@ export default class GameScene extends Phaser.Scene {
         });
         
     }
+
+
+createPortal() {
+  this.map.findObject('Portal', (obj) => {
+      this.portal = new Portal(this, obj.x, obj.y);
+  });
+}
 
     resize (gameSize, baseSize, displaySize, resolution) {  //enables dynamic resizing of the game window with browsers
         let width = gameSize.width;
@@ -68,15 +78,17 @@ export default class GameScene extends Phaser.Scene {
     
         // create our layers
         this.backgroundLayer = this.map.createStaticLayer('Background', this.tiles, 0, 0);
-        this.blockedLayer = this.map.createStaticLayer('Blocked', this.tiles, 0, 0);
+
         
-        this.backgroundLayer = this.map.createStaticLayer('Blocked2', this.tiles, 0, 0);
-        // this.blockedLayer = this.map.createStaticLayer('Blocked3', this.tiles, 0, 0);
+        this.blockedLayer = this.map.createStaticLayer('Blocked', this.tiles, 0, 0);
+        this.blockedLayer.setCollisionByExclusion(-1);
+        this.blockedLayer = this.map.createStaticLayer('Blocked2', this.tiles, 0, 0);
+        this.blockedLayer.setCollisionByExclusion(-1);
         this.backgroundLayer = this.map.createStaticLayer('Paths', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Paths2', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture2', this.tiles, 0, 0);
-        this.blockedLayer.setCollisionByExclusion(-1);
+        
     }
 };
 

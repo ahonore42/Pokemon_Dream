@@ -15,6 +15,8 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
         this.load.spritesheet('GimpMaster', '../src/assets/images/GimpMaster.png', { frameWidth: 32, frameHeight: 32 });
         // load in the character spritesheet
         this.load.spritesheet('Bulbasaur', '../src/assets/images/Bulbasaur.png', { frameWidth: 32, frameHeight: 32 });
+         // load our portal sprite
+        this.load.image('Portal', '../src/assets/images/Portal.png');
     }
 
     create () {
