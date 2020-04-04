@@ -19,6 +19,29 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
 
     create () {
         this.scene.start('Game');
-        
+        this.anims.create({
+            key: 'left',
+            frames: this.anims.generateFrameNames('Bulbasaur', { start: 12, end: 14}),
+            frameRate: 8,
+            repeat: 0
+          });
+          this.anims.create({
+            key: 'right',
+            frames: this.anims.generateFrameNames('Bulbasaur', { start: 20, end: 18}),
+            frameRate: 8,
+            repeat: 0
+          });
+          this.anims.create({
+            key: 'up',
+            frames: this.anims.generateFrameNames('Bulbasaur', { start: 6, end: 8}),
+            frameRate: 8,
+            repeat: 0
+          });
+          this.anims.create({
+            key: 'down',
+            frames: this.anims.generateFrameNames('Bulbasaur', {start: 0, end: 2}),
+            frameRate: 8,
+            repeat: 0
+          });
     }
 };

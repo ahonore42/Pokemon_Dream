@@ -17,7 +17,9 @@ export default class GameScene extends Phaser.Scene {
         //creates the tilemap
         this.createMap();
         // create pokemon
-        this.createPlayer();      
+        this.createPlayer();    
+        // create a portal
+        //this.createPortal()  
         //add collisions
         this.addCollisions();
         //  update the camera to follow the player around the map
@@ -30,6 +32,9 @@ export default class GameScene extends Phaser.Scene {
 
     addCollisions () {      //adds collisions between the player and the map
         this.physics.add.collider(this.player, this.blockedLayer)
+        this.physics.add.collider(this.player, this.map)
+        this.physics.add.collider(this.player, this.blockedLayer);
+
     }
 
     createPlayer () {
@@ -64,7 +69,8 @@ export default class GameScene extends Phaser.Scene {
         // create our layers
         this.backgroundLayer = this.map.createStaticLayer('Background', this.tiles, 0, 0);
         this.blockedLayer = this.map.createStaticLayer('Blocked', this.tiles, 0, 0);
-        this.blockedLayer = this.map.createStaticLayer('Blocked2', this.tiles, 0, 0);
+        
+        this.backgroundLayer = this.map.createStaticLayer('Blocked2', this.tiles, 0, 0);
         // this.blockedLayer = this.map.createStaticLayer('Blocked3', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Paths', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Paths2', this.tiles, 0, 0);
