@@ -7,10 +7,15 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
     }
 
     preload () {
-        
+        this.levels = {
+            1: 'map1',
+            2: 'map2',
+            3: 'dungeon'
+        };
         // loads in the tilemap
         this.load.tilemapTiledJSON('map1', '../src/assets/tilemaps/map1.json');
- 
+        this.load.tilemapTiledJSON('map2', '../src/assets/tilemaps/map2.json');
+        this.load.tilemapTiledJSON('dungeon', '../src/assets/tilemaps/dungeon.json');
         // load in the map spritesheet
         this.load.spritesheet('GimpMaster', '../src/assets/images/GimpMaster.png', { frameWidth: 32, frameHeight: 32 });
         // load in the character spritesheet
@@ -45,5 +50,7 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
             frameRate: 8,
             repeat: 0
           });
+
+          this.scene.start('Game', {level: 1, newGame: true, levels: this.levels});
     }
 };
