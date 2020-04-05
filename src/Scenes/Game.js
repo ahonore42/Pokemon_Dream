@@ -2,6 +2,7 @@ import 'phaser';
 import Player from '../Sprites/Player';
 import Portal from '../Sprites/Portal';
 import Berries from '../Groups/Berries';
+import Enemies from '../Groups/Enemies';
 
 export default class GameScene extends Phaser.Scene {
     constructor (key) {
@@ -14,6 +15,7 @@ export default class GameScene extends Phaser.Scene {
         this._LEVELS = data.levels;
         this._NEWGAME = data.newGame;
         this.loadingLevel = false;
+        this.events.emit('newGame');
     }
 
     create () {
@@ -30,6 +32,9 @@ export default class GameScene extends Phaser.Scene {
         this.berriesGroup = new Berries(this.physics.world, this, [], this.berries);
         // create a portal
         this.createPortal()  
+        //create enemies
+        this.enemies = this.map.createFromObjects('Enemies', 'Gengar', {});
+        this.enemiesGroup = new Enemies(this.physics.world, this, [], this.enemies);
         //add collisions
         this.addCollisions();
         //  update the camera to follow the player around the map
@@ -43,10 +48,13 @@ export default class GameScene extends Phaser.Scene {
     addCollisions () {      //adds collisions between the player and the map
         
         this.physics.add.collider(this.player, this.blockedLayer)
+        this.physics.add.collider(this.enemiesGroup, this.blockedLayer);
+        this.physics.add.overlap(this.player, this.enemiesGroup, this.player.enemyCollision.bind(this.player));
         this.physics.add.collider(this.player, this.map)
+        this.physics.add.collider(this.enemiesGroup, this.map)
         this.physics.add.overlap(this.player, this.portal, this.loadNextLevel.bind(this));
         this.physics.add.overlap(this.berriesGroup, this.player, this.berriesGroup.collectBerry.bind(this.berriesGroup));
-
+        
     }
 
     createPlayer () {
@@ -111,9 +119,9 @@ createPortal() {
 
     loadNextLevel () {
         if (!this.loadingLevel) {
-            this.cameras.main.fade(700, 0, 0, 0);
+            this.cameras.main.fade(1000, 0, 0, 0);
             this.cameras.main.on( 'camerafadeoutcomplete', () => {
-                if (this._LEVEL === 1) {
+                if (this._LEVEL === 1 ) {
                 this.scene.restart({level: 2, levels: this._LEVELS, newGame: false});
                 }
                 else if (this._LEVEL === 2) {
@@ -124,6 +132,18 @@ createPortal() {
                 }
             });
         this.loadingLevel = true
+        }
+    }
+      
+    gameRestart (endGame) {
+         if (!this.loadingLevel) {
+            this.cameras.main.fade(2000, 0, 0, 0);
+            this.cameras.main.on( 'camerafadeoutcomplete', () => {
+                if (endGame) {
+                this.scene.restart({level: 1, levels: this._LEVELS, newGame: true});
+                 }
+            });
+             
         }
     }
 };

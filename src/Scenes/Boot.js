@@ -24,6 +24,8 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
         this.load.image('Portal', '../src/assets/images/Portal.png');
          // load berry sprite
          this.load.image('berry', '../src/assets/images/berry.png');
+         // load in the enemy spritesheet
+        this.load.spritesheet('Gengar', '../src/assets/images/Gengar.png', { frameWidth: 32, frameHeight: 32 });
     }
 
     create () {
