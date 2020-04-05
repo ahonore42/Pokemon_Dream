@@ -1,6 +1,7 @@
 import 'phaser';
 import Player from '../Sprites/Player';
 import Portal from '../Sprites/Portal';
+import Berries from '../Groups/Berries';
 
 export default class GameScene extends Phaser.Scene {
     constructor (key) {
@@ -24,10 +25,11 @@ export default class GameScene extends Phaser.Scene {
         this.createMap();
         // create pokemon
         this.createPlayer();   
-        
-        this.createPortal();
+        // create berries
+        this.berries = this.map.createFromObjects('Berries', 'Berry', { key: 'berry'});
+        this.berriesGroup = new Berries(this.physics.world, this, [], this.berries);
         // create a portal
-        //this.createPortal()  
+        this.createPortal()  
         //add collisions
         this.addCollisions();
         //  update the camera to follow the player around the map
@@ -43,6 +45,7 @@ export default class GameScene extends Phaser.Scene {
         this.physics.add.collider(this.player, this.blockedLayer)
         this.physics.add.collider(this.player, this.map)
         this.physics.add.overlap(this.player, this.portal, this.loadNextLevel.bind(this));
+        this.physics.add.overlap(this.berriesGroup, this.player, this.berriesGroup.collectBerry.bind(this.berriesGroup));
 
     }
 
@@ -63,9 +66,9 @@ export default class GameScene extends Phaser.Scene {
 createPortal() {
   this.map.findObject('Portal', (obj) => {
     if (this._LEVEL === 1) {
-        this.portal = new Portal(this, obj.x + 500, obj.y + 1728);
+        this.portal = new Portal(this, obj.x, obj.y);
       } else if (this._LEVEL === 2) {
-        this.portal = new Portal(this, obj.x - 1450, obj.y + 1700);
+        this.portal = new Portal(this, obj.x, obj.y);
       }
   });
 }
