@@ -3,6 +3,8 @@ import Player from '../Sprites/Player';
 import Portal from '../Sprites/Portal';
 import Berries from '../Groups/Berries';
 import Enemies from '../Groups/Enemies';
+import Bullets from '../Groups/Bullets';
+
 
 export default class GameScene extends Phaser.Scene {
     constructor (key) {
@@ -23,18 +25,21 @@ export default class GameScene extends Phaser.Scene {
         this.scale.on('resize', this.resize, this);
         // listen for player input
         this.cursors = this.input.keyboard.createCursorKeys();
+        this.spaceKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
         //creates the tilemap
         this.createMap();
         // create pokemon
-        this.createPlayer();   
+        this.createPlayer();  
+        // create portals
+        this.createPortal()   
         // create berries
         this.berries = this.map.createFromObjects('Berries', 'Berry', { key: 'berry'});
         this.berriesGroup = new Berries(this.physics.world, this, [], this.berries);
-        // create a portal
-        this.createPortal()  
-        //create enemies
+        //create nasty ghost pokemon
         this.enemies = this.map.createFromObjects('Enemies', 'Gengar', {});
         this.enemiesGroup = new Enemies(this.physics.world, this, [], this.enemies);
+        // creating the bullets
+        this.bullets = new Bullets(this.physics.world, this, []);
         //add collisions
         this.addCollisions();
         //  update the camera to follow the player around the map
@@ -43,6 +48,10 @@ export default class GameScene extends Phaser.Scene {
 
     update () {
         this.player.update(this.cursors);
+
+        if (Phaser.Input.Keyboard.JustDown(this.spaceKey)) {
+            this.bullets.fireBullet(this.player.x, this.player.y, this.player.direction);
+        }
     }
 
     addCollisions () {      //adds collisions between the player and the map
@@ -54,7 +63,7 @@ export default class GameScene extends Phaser.Scene {
         this.physics.add.collider(this.enemiesGroup, this.map)
         this.physics.add.overlap(this.player, this.portal, this.loadNextLevel.bind(this));
         this.physics.add.overlap(this.berriesGroup, this.player, this.berriesGroup.collectBerry.bind(this.berriesGroup));
-        
+        this.physics.add.overlap(this.bullets, this.enemiesGroup, this.bullets.enemyCollision);
     }
 
     createPlayer () {
@@ -63,7 +72,8 @@ export default class GameScene extends Phaser.Scene {
               if (obj.type === 'StartingPosition'){
                 this.player = new Player(this, obj.x, obj.y);
               }
-            } else {
+            } 
+            else {
               this.player = new Player(this, obj.x, obj.y);
             }
         });

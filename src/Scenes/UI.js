@@ -29,7 +29,7 @@ init () {
           this.gameScene.events.on('newGame', () => {
             this.berriesCollected = 0;
             this.scoreText.setText(`Berries: ${this.berriesCollected}`)
-            this.healthText.setText(`Health: 3`)
+            this.healthText.setText(`Health: 5`)
           });
     }
   };

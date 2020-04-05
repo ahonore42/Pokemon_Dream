@@ -34,7 +34,7 @@ export default class Enemy extends Phaser.Physics.Arcade.Sprite {
       this.destroy();
     } else {
       this.scene.time.addEvent({
-        delay: 3000,
+        delay: 200,
         callback: () => {
           this.tint = 0xffffff;
         }

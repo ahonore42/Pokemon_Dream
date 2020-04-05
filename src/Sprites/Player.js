@@ -5,7 +5,7 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     constructor (scene, x, y) {
         super(scene, x, y, 'Bulbasaur', 2);
         this.scene = scene;
-        this.health = 3;
+        this.health = 5;
         this.hitDelay = false;
         //enable physics
         this.scene.physics.world.enable(this);
@@ -20,19 +20,23 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     update (cursors) {
         this.setVelocity(0) //stops the player when the keyboard isn't being pressed
         if (cursors.up.isDown) {       //check if up or down is pressed on the keyboard
+            this.direction = 'up';
             this.setVelocityY(-120);
             this.anims.play('up', true)
         }
         else if(cursors.down.isDown) {
+            this.direction = 'down';
             this.setVelocityY(120);
             this.anims.play('down', true)
         }
         else if (cursors.left.isDown) { //check if left or right is pressed on the keyboard
+            this.direction = 'left';
             this.setVelocityX(-120);
             this.anims.play('left', true)
             
         } 
         else if (cursors.right.isDown) {
+            this.direction = 'right';
             this.setVelocityX(120);
             this.anims.play('right', true)
         }
