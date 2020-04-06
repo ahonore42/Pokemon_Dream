@@ -2,7 +2,7 @@ import "phaser";
  
 export default class Enemy extends Phaser.Physics.Arcade.Sprite {
   constructor (scene, x, y, frame) {
-    super(scene, x, y, 'Gengar', frame);
+    super(scene, x, y, 'Ghosts', frame);
     this.scene = scene;
     this.health = 3;
     

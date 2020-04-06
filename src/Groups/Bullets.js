@@ -4,12 +4,13 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
     constructor (world, scene, children) {
       super(world, scene);
       this.scene = scene;
-   
+    
       this.createMultiple({
         frameQuantity: 5,
         key: 'bullet',
         active: false,
-        visible: false
+        visible: true,
+        
       });
     }
    
@@ -27,23 +28,23 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
         bullet.active = true;
         bullet.visible = true;
         bullet.setPosition(x, y);
-        bullet.setScale(0.2);
+        bullet.setScale(1);
    
         switch (direction) {
           case 'up':
-            bullet.setVelocityY(-300);
+            bullet.setVelocityY(-200);
             break;
           case 'down':
-            bullet.setVelocityY(300);
+            bullet.setVelocityY(200);
             break;
           case 'left':
-            bullet.setVelocityX(-300);
+            bullet.setVelocityX(-200);
             break;
           case 'right':
-            bullet.setVelocityX(300);
+            bullet.setVelocityX(200);
             break;
           default:
-            bullet.setVelocityY(-300);
+            bullet.setVelocityY(-200);
         }
    
         this.scene.time.addEvent({
@@ -54,6 +55,7 @@ export default class Bullets extends Phaser.Physics.Arcade.Group {
             bullet.visible = false;
             bullet.setVelocity(0);
           }
+          
         });
       }
     }

@@ -13,10 +13,10 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
         //add bulbasaur to the pokemon world. Or scene, we can just call it a scene
         this.scene.add.existing(this);
         
+        
     }
 
     
-
     update (cursors) {
         this.setVelocity(0) //stops the player when the keyboard isn't being pressed
         if (cursors.up.isDown) {       //check if up or down is pressed on the keyboard
@@ -44,9 +44,12 @@ export default class Player extends Phaser.Physics.Arcade.Sprite {
     }
     
     loseHealth () {
+        
+        
         this.health--;
         this.scene.events.emit('loseHealth', this.health);
         if (this.health === 0) {
+            
           this.scene.gameRestart(true);
         }
     }

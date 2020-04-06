@@ -26,12 +26,25 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
          this.load.image('berry', '../src/assets/images/berry.png');
          // load in the enemy spritesheet
         this.load.spritesheet('Gengar', '../src/assets/images/Gengar.png', { frameWidth: 32, frameHeight: 32 });
+        this.load.spritesheet('Ghosts', '../src/assets/images/Ghosts.png', { frameWidth: 32, frameHeight: 32 });
         // load in our bullet sprite
-        this.load.image('bullet', '..src/assets/images/rzrleaf.png');
+        this.load.image('bullet', '../src/assets/images/rzrleaf.png');
+        //load in music and sounds
+        this.load.audio('forest', ['../src/assets/audio/EternaForest.mp3', '../src/assets/audio/EternaForest.mp3']);
+        this.load.audio('attack', '../src/assets/audio/vinewhip.mp3');
+        this.load.audio('cry', '../src/assets/audio/Bulbasaur.mp3');
+        //Menus images
+        this.load.image('button1', '../src/assets/images/pokemonbutton1.png');
+        this.load.image('button2', '../src/assets/images/pokemonbutton2.png');
+        this.load.image('menuBackground', '../src/assets/images/sunset.png');
+        this.load.image('gameWin', '../src/assets/images/gamewin.png');
+        this.load.image('gameLose', '../src/assets/images/gameover.png');
+
+
     }
 
     create () {
-        this.scene.start('Game');
+        this.scene.start('Menu');
         this.anims.create({
             key: 'left',
             frames: this.anims.generateFrameNames('Bulbasaur', { start: 12, end: 14}),
@@ -56,7 +69,8 @@ export default class BootScene extends Phaser.Scene {   //creates a scene loadin
             frameRate: 8,
             repeat: 0
           });
-
-          this.scene.start('Game', {level: 1, newGame: true, levels: this.levels});
+       
+        //this.scene.start('Game', {level: 1, newGame: true, levels: this.levels});
+          //
     }
 };

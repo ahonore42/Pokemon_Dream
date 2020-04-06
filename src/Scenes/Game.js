@@ -6,6 +6,7 @@ import Enemies from '../Groups/Enemies';
 import Bullets from '../Groups/Bullets';
 
 
+
 export default class GameScene extends Phaser.Scene {
     constructor (key) {
         super(key);
@@ -21,6 +22,23 @@ export default class GameScene extends Phaser.Scene {
     }
 
     create () {
+        
+        const music = this.sound.add('forest', {volume: 0.5})
+        var loopMarker = {
+            name: 'loop',
+            start: 0,
+            duration: 168,
+            config: {
+                loop: true
+            }
+        };
+        music.addMarker(loopMarker);
+        if(this.scene !== 'Game') {music.pause()};
+        if(this._NEWGAME && this._LEVEL === 1) {music.play('loop')};
+        
+        this.damage = this.sound.add('cry'); 
+
+
         //listen for the resize event
         this.scale.on('resize', this.resize, this);
         // listen for player input
@@ -43,8 +61,15 @@ export default class GameScene extends Phaser.Scene {
         //add collisions
         this.addCollisions();
         //  update the camera to follow the player around the map
-        this.cameras.main.startFollow(this.player);  
+        this.cameras.main.startFollow(this.player);
+        this.cameras.main.setZoom(2)   
+       
+        
+        
     }
+
+   
+
 
     update () {
         this.player.update(this.cursors);
@@ -76,6 +101,7 @@ export default class GameScene extends Phaser.Scene {
             else {
               this.player = new Player(this, obj.x, obj.y);
             }
+          
         });
         
     }
@@ -84,8 +110,11 @@ export default class GameScene extends Phaser.Scene {
 createPortal() {
   this.map.findObject('Portal', (obj) => {
     if (this._LEVEL === 1) {
-        this.portal = new Portal(this, obj.x, obj.y);
+        this.portal = new Portal(this, obj.x + 600, obj.y + 1800);
       } else if (this._LEVEL === 2) {
+        this.portal = new Portal(this, obj.x - 1450, obj.y + 1700);
+      }
+      else if (this._LEVEL === 3) {
         this.portal = new Portal(this, obj.x, obj.y);
       }
   });
@@ -124,7 +153,9 @@ createPortal() {
         this.backgroundLayer = this.map.createStaticLayer('Paths2', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture', this.tiles, 0, 0);
         this.backgroundLayer = this.map.createStaticLayer('Texture2', this.tiles, 0, 0);
-        
+        //Set boundaries of game world
+        this.physics.world.bounds.width = this.map.width;
+        this.physics.world.bounds.height = this.map.height;
     }
 
     loadNextLevel () {
@@ -138,19 +169,28 @@ createPortal() {
                 this.scene.restart({level: 3, levels: this._LEVELS, newGame: false})
                 }
                 else if (this._LEVEL === 3) {
-                this.scene.restart({level: 1, levels: this._LEVELS, newGame: false})
-                }
+                //this.scene.restart({level: 1, levels: this._LEVELS, newGame: false})
+                //}
+                
+                this.scene.stop('Game')
+
+                this.scene.start('Winner')}
             });
+            
         this.loadingLevel = true
         }
     }
       
     gameRestart (endGame) {
+         //add music
+        
          if (!this.loadingLevel) {
             this.cameras.main.fade(2000, 0, 0, 0);
             this.cameras.main.on( 'camerafadeoutcomplete', () => {
                 if (endGame) {
-                this.scene.restart({level: 1, levels: this._LEVELS, newGame: true});
+                 this.scene.stop('Game')
+                 this.scene.start('Lose')
+                
                  }
             });
              

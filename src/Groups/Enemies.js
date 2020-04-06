@@ -5,7 +5,7 @@ export default class Enemies extends Phaser.Physics.Arcade.Group {
   constructor(world, scene, children, spriteArray) {
     super(world, scene, children);
     this.scene = scene;
-    this.spriteFrames = [0, 1, 4, 28, 30, 33, 56, 57, 61];
+    this.spriteFrames = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35];
  
     // create our enemies from the sprite array
     this.createEnemies(scene, spriteArray);
