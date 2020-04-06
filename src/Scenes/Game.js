@@ -173,7 +173,7 @@ createPortal() {
                 //}
                 
                 this.scene.stop('Game')
-
+            
                 this.scene.start('Winner')}
             });
             
@@ -183,13 +183,14 @@ createPortal() {
       
     gameRestart (endGame) {
          //add music
-        
+         
          if (!this.loadingLevel) {
             this.cameras.main.fade(2000, 0, 0, 0);
             this.cameras.main.on( 'camerafadeoutcomplete', () => {
                 if (endGame) {
-                 this.scene.stop('Game')
-                 this.scene.start('Lose')
+                
+                this.scene.stop('Game')
+                this.scene.start('Lose')
                 
                  }
             });
