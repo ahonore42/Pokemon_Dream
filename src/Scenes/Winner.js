@@ -14,7 +14,7 @@ export default class WinScene extends Phaser.Scene {
     this.add.image(0, 0, 'gameWin').setOrigin(0).setDepth(0);
 
     // create title text
-    this.titleText = this.add.text(this.scale.width / 2, this.scale.height / 3, '[You won! Great job!]', {fontSize: '50px', fill: '#00b'});
+    this.titleText = this.add.text(this.scale.width / 2, this.scale.height / 3, '[You won! Great job!]', {fontSize: '50px', fill: '#00d'});
     this.titleText.setOrigin(0.5);
     this.button = this.add.image(this.scale.width / 2, this.scale.height / 1.5, 'button1');
     this.button.setInteractive();

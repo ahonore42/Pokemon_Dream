@@ -110,9 +110,9 @@ export default class GameScene extends Phaser.Scene {
 createPortal() {
   this.map.findObject('Portal', (obj) => {
     if (this._LEVEL === 1) {
-        this.portal = new Portal(this, obj.x + 600, obj.y + 1800);
+        this.portal = new Portal(this, obj.x, obj.y);
       } else if (this._LEVEL === 2) {
-        this.portal = new Portal(this, obj.x - 1450, obj.y + 1700);
+        this.portal = new Portal(this, obj.x, obj.y);
       }
       else if (this._LEVEL === 3) {
         this.portal = new Portal(this, obj.x, obj.y);
